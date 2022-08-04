@@ -9,7 +9,7 @@ const app = express();
 const authRoutes = require('./routes/auth-routes')
 //here import authRoutes from other file with a path.
 
-app.set('views engine', 'ejs');
+app.set('view engine', 'ejs' );
 app.set('views', path.join(__dirname, 'views'));
 // here set view engine and path. 
 // join is a method form path package.

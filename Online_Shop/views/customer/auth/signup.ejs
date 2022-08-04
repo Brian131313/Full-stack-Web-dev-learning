@@ -1,9 +1,87 @@
 <%- include('../includes/head', {pageTitle: 'Signup'})%>
+<!-- include head.ejs metadata with path, and value of pageTitle template -->
 <body>
   <%- include('../includes/header') %>
+  <!-- include header.ejs with path -->
   <main>
     <h1></h1>
-    <form action="" method=""></form>
+    <form action="" method="">
+      <p>
+        <label for="email">Email</label>
+        <input
+          type="email"
+          name="email"
+          id="email"
+          required
+          placeholder="enter your email"
+        />
+        <!-- for="" and id="" are use to connect label and input tag -->
+        <!-- input tag of name="" use to extract the value entered by the user, in back-end server side-->
+      </p>
+      <p>
+        <label for="confirm-email">Confirm Email</label>
+        <input
+          type="confirm-email"
+          name="confirm-email"
+          id="confirm-email"
+          required
+          placeholder="confirm email"
+        />
+      </p>
+      <!-- this p is for confirm email input -->
+      <p>
+        <label for="password">Password</label>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          required
+          minlength="6"
+          placeholder="enter a password of no more than 6 digits"
+        />
+      </p>
+      <!-- this p is for password input -->
+      <hr />
+      <p>
+        <label for="fullname">Full Name</label>
+        <input
+          type="text"
+          name="fullname"
+          id="fullname"
+          required
+          placeholder="enter your full name"
+        />
+      </p>
+      <!-- this p is for fullname input -->
+      <p>
+        <label for="phonenumber">phone-number</label>
+        <input
+          type="number"
+          name="phonenumber"
+          id="phonenumber"
+          required
+          maxlength="11"
+          placeholder="enter your phone-number"
+        />
+      </p>
+      <!-- this p is for phonenumber input -->
+      <p>
+        <label for="address">Address</label>
+        <input
+          type="text"
+          name="address"
+          id="address"
+          required
+          placeholder="enter your address"
+        />
+      </p>
+      <!-- this p is for address input -->
+      <button class="btn">Create Account</button>
+      <p id="switch-form">
+        <a href="/login">Login instead</a>
+      </p>
+    </form>
   </main>
 </body>
 <%- include('../includes/footer') %>
+<!-- include footer.ejs with path -->
