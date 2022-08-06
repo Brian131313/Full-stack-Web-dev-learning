@@ -9,11 +9,14 @@ const app = express();
 const authRoutes = require('./routes/auth-routes')
 //here import authRoutes from other file with a path.
 
-app.set('view engine', 'ejs' );
+app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 // here set view engine and path. 
 // join is a method form path package.
 // __dirname is global method.
+
+app.use(express.static('public'));
+
 
 app.use(authRoutes);
 //'use' is a built-in method form express app object that allows us to add a middleware.
