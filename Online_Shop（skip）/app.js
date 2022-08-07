@@ -2,17 +2,17 @@ const path = require("path");
 //path package is built into Node.js already.
 
 const express = require("express");
-const app = express();
-//here import express package and define it as app.
-//so, it's pretty clear here, app equals express package.
 const csrf = require("csurf");
-//'npm install csurf'
+const expressSession = require("express-session");
 
+const createSessionConfig = require("./config/session");
 const db = require("./data/database");
 const authRoutes = require("./routes/auth-routes");
 const addCsrfTokenMiddleware = require("./middlewares/csrf-token");
 const errorHandlerMiddleware = require("./middlewares/error-handler");
 
+const app = express();
+//so, it's pretty clear here, app equals express package.
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 // here set view engine and path.
@@ -24,6 +24,9 @@ app.use(express.urlencoded({ extended: false }));
 // Returns middleware that only parses urlencoded bodies and only looks at requests
 // where the Content-Type header matches the type option
 // set extended to false to support a regular form submission.
+const sessionConfig = createSessionConfig();
+
+app.use(expressSession(sessionConfig));
 app.use(csrf());
 app.use(addCsrfTokenMiddleware);
 //csrf protection, all incoming requests(not get)now need to have a CSRF token attached.
