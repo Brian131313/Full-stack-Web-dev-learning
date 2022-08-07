@@ -5,11 +5,13 @@ const express = require("express");
 const app = express();
 //here import express package and define it as app.
 //so, it's pretty clear here, app equals express package.
+const csrf = require("csurf");
+//'npm install csurf'
 
 const db = require("./data/database");
-// here import database form other file with a path.
 const authRoutes = require("./routes/auth-routes");
-//here import authRoutes from other file with a path.
+const addCsrfTokenMiddleware = require("./middlewares/csrf-token");
+const errorHandlerMiddleware = require("./middlewares/error-handler");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -18,9 +20,18 @@ app.set("views", path.join(__dirname, "views"));
 // __dirname is global method.
 
 app.use(express.static("public"));
-
+app.use(express.urlencoded({ extended: false }));
+// Returns middleware that only parses urlencoded bodies and only looks at requests
+// where the Content-Type header matches the type option
+// set extended to false to support a regular form submission.
+app.use(csrf());
+app.use(addCsrfTokenMiddleware);
+//csrf protection, all incoming requests(not get)now need to have a CSRF token attached.
+//csrf middleware will check the CSRF token.
+//any requests that don't have a CSRF token will be denied.
 app.use(authRoutes);
 //'use' is a built-in method form express app object that allows us to add a middleware.
+app.use(errorHandlerMiddleware);
 
 db.connectToDatabase()
   .then(function () {

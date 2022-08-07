@@ -1,0 +1,48 @@
+<%- include('../../shared/includes/head', {pageTitle: 'Login'})%>
+<!-- include head.ejs metadata with path, and value of pageTitle template -->
+<link rel="stylesheet" href="/styles/forms.css">
+<link rel="stylesheet" href="/styles/auth.css">
+</head>
+
+<body>
+  <%- include('../../shared/includes/header') %>
+  <!-- include header.ejs with path -->
+  <main>
+    <h1>Login</h1>
+    <form action="/signup" method="POST">
+      <!-- I need to put / in action, don't forget about it -->
+      <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
+<!-- not define locals yet -->
+      <p>
+        <label for="email">Email</label>
+        <input
+          type="email"
+          name="email"
+          id="email"
+          required
+          placeholder="enter your email"
+        />
+        <!-- for="" and id="" are use to connect label and input tag -->
+        <!-- input tag of name="" use to extract the value entered by the user, in back-end server side-->
+      </p>
+      <p>
+        <label for="password">Password</label>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          required
+          minlength="6"
+          placeholder="enter a password of no more than 6 digits"
+        />
+      </p>
+      <!-- this p is for password input -->
+      <button class="btn">Login</button>
+      <p id="switch-form">
+        <a href="/signup">Create a new user</a>
+      </p>
+    </form>
+  </main>
+</body>
+<%- include('../../shared/includes/footer') %>
+<!-- include footer.ejs with path -->

@@ -3,8 +3,12 @@ h1 {
   color: var(--color-gray-700);
 }
 
+p label {
+  font-size: larger;
+}
+
 form {
-  max-width: 30rem;
+  max-width: 27rem;
   margin: var(--space-8) auto;
   padding: var(--space-4);
   background-color: var(--color-gray-700);
