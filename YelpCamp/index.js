@@ -17,6 +17,7 @@ app.use(methodOverride("_method"));
 
 app.use(campgroundsRoutes);
 app.use(reviewsRoutes);
+app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", (req, res) => {
   res.render("home");

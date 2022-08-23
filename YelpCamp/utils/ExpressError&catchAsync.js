@@ -12,4 +12,4 @@ function catchAsync(func) {
   };
 }
 
-module.exports = { ExpressError: ExpressError, catchAsync: catchAsync };
+module.exports = { ExpressError, catchAsync };

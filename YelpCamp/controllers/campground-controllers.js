@@ -1,18 +1,52 @@
 const { Campground } = require("../models/campground&review");
 
-const validateCampground = (req, res, next) => {
-  const { error } = campgroundSchema.validate(req.body);
-  if (error) {
-    const msg = error.details.map((el) => el.message).join(",");
-    throw new ExpressError(msg, 400);
-  } else {
-    next();
-  }
-};
-
 getCampgrounds = async (req, res) => {
   const campgrounds = await Campground.find({});
   res.render("campgrounds/index", { campgrounds });
 };
 
-module.exports = { getCampgrounds };
+getNewCampground = (req, res) => {
+  res.render("campgrounds/new");
+};
+
+createNewCampground = async (req, res, next) => {
+  const campground = new Campground(req.body.campground);
+  await campground.save();
+  res.redirect(`/campgrounds/${campground._id}`);
+};
+
+getOneCampground = async (req, res) => {
+  const campground = await Campground.findById(req.params.id).populate(
+    "reviews"
+  );
+  res.render("campgrounds/show", { campground });
+};
+
+getOne_EditCampground = async (req, res) => {
+  const campground = await Campground.findById(req.params.id);
+  res.render("campgrounds/edit", { campground });
+};
+
+updateCampground = async (req, res) => {
+  const { id } = req.params;
+  const campground = await Campground.findByIdAndUpdate(id, {
+    ...req.body.campground,
+  });
+  res.redirect(`/campgrounds/${campground._id}`);
+};
+
+deleteCampground = async (req, res) => {
+  const { id } = req.params;
+  await Campground.findByIdAndDelete(id);
+  res.redirect("/campgrounds");
+};
+
+module.exports = {
+  getCampgrounds,
+  getNewCampground,
+  createNewCampground,
+  getOneCampground,
+  getOne_EditCampground,
+  updateCampground,
+  deleteCampground,
+};

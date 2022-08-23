@@ -17,60 +17,35 @@ const validateCampground = (req, res, next) => {
   }
 };
 
-router.get("/campgrounds", catchAsync(campgroundControllers.getCampgrounds()));
+router.get("/campgrounds", catchAsync(campgroundControllers.getCampgrounds));
 
-router.get("/campgrounds/new", (req, res) => {
-  res.render("campgrounds/new");
-});
+router.get("/campgrounds/new", campgroundControllers.getNewCampground);
 
 router.post(
   "/campgrounds",
   validateCampground,
-  catchAsync(async (req, res, next) => {
-    // if (!req.body.campground) throw new ExpressError('Invalid Campground Data', 400);
-    const campground = new Campground(req.body.campground);
-    await campground.save();
-    res.redirect(`/campgrounds/${campground._id}`);
-  })
+  catchAsync(campgroundControllers.createNewCampground)
 );
 
 router.get(
   "/campgrounds/:id",
-  catchAsync(async (req, res) => {
-    const campground = await Campground.findById(req.params.id).populate(
-      "reviews"
-    );
-    res.render("campgrounds/show", { campground });
-  })
+  catchAsync(campgroundControllers.getOneCampground)
 );
 
 router.get(
   "/campgrounds/:id/edit",
-  catchAsync(async (req, res) => {
-    const campground = await Campground.findById(req.params.id);
-    res.render("campgrounds/edit", { campground });
-  })
+  catchAsync(campgroundControllers.getOne_EditCampground)
 );
 
 router.put(
   "/campgrounds/:id",
   validateCampground,
-  catchAsync(async (req, res) => {
-    const { id } = req.params;
-    const campground = await Campground.findByIdAndUpdate(id, {
-      ...req.body.campground,
-    });
-    res.redirect(`/campgrounds/${campground._id}`);
-  })
+  catchAsync(campgroundControllers.updateCampground)
 );
 
 router.delete(
   "/campgrounds/:id",
-  catchAsync(async (req, res) => {
-    const { id } = req.params;
-    await Campground.findByIdAndDelete(id);
-    res.redirect("/campgrounds");
-  })
+  catchAsync(campgroundControllers.deleteCampground)
 );
 
 module.exports = router;
