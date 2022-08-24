@@ -17,6 +17,9 @@ const validateCampground = (req, res, next) => {
   }
 };
 
+router.get("/", (req, res) => {
+  res.render("home");
+});
 router.get("/campgrounds", catchAsync(campgroundControllers.getCampgrounds));
 
 router.get("/campgrounds/new", campgroundControllers.getNewCampground);

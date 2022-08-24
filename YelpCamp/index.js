@@ -2,6 +2,9 @@ const express = require("express");
 const path = require("path");
 const ejsMate = require("ejs-mate");
 const methodOverride = require("method-override");
+const session = require("express-session");
+
+const sessionConfig = require("./config/session");
 const db = require("./models/database");
 const campgroundsRoutes = require("./routes/campground-routes");
 const reviewsRoutes = require("./routes/review-routes");
@@ -14,14 +17,12 @@ app.set("views", path.join(__dirname, "views"));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
+app.use(express.static("public"));
 
 app.use(campgroundsRoutes);
 app.use(reviewsRoutes);
-app.use(express.static(path.join(__dirname, "public")));
 
-app.get("/", (req, res) => {
-  res.render("home");
-});
+app.use(session(sessionConfig));
 
 app.all("*", (req, res, next) => {
   next(new ExpressError("Page Not Found", 404));
