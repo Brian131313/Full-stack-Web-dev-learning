@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const ejsMate = require("ejs-mate");
 const methodOverride = require("method-override");
+const flash = require("connect-flash");
 const session = require("express-session");
 
 const sessionConfig = require("./config/session");
@@ -19,10 +20,16 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static("public"));
 
+app.use(session(sessionConfig));
+app.use(flash());
+
+app.use((req, res, next) => {
+  res.locals.success = req.flash("success");
+  next();
+});
+
 app.use(campgroundsRoutes);
 app.use(reviewsRoutes);
-
-app.use(session(sessionConfig));
 
 app.all("*", (req, res, next) => {
   next(new ExpressError("Page Not Found", 404));
