@@ -20,11 +20,19 @@ getOneCampground = async (req, res) => {
   const campground = await Campground.findById(req.params.id).populate(
     "reviews"
   );
+  if (!campground) {
+    req.flash("error", "No campground found!");
+    return res.redirect("/campgrounds");
+  }
   res.render("campgrounds/show", { campground });
 };
 
 getOne_EditCampground = async (req, res) => {
   const campground = await Campground.findById(req.params.id);
+  if (!campground) {
+    req.flash("error", "No campground found!");
+    return res.redirect("/campgrounds");
+  }
   res.render("campgrounds/edit", { campground });
 };
 
