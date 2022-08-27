@@ -28,13 +28,15 @@ app.use(express.static("public"));
 
 app.use(session(sessionConfig));
 app.use(flash());
-app.use(flash_middleware);
 
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
+app.use(flash_middleware);
+// order is important!
 
 app.use(authRoutes);
 app.use(campgroundsRoutes);
