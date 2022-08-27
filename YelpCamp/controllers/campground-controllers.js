@@ -6,6 +6,10 @@ getCampgrounds = async (req, res) => {
 };
 
 getNewCampground = (req, res) => {
+  if (!req.isAuthenticated()) {
+    req.flash("error", "Please login first!");
+    return res.redirect("/login");
+  }
   res.render("campgrounds/new");
 };
 
