@@ -14,7 +14,7 @@ const authRoutes = require("./routes/auth-routes");
 const campgroundsRoutes = require("./routes/campground-routes");
 const reviewsRoutes = require("./routes/review-routes");
 const { flash_middleware } = require("./middleware/flash&error-middleware");
-const { errorhandler } = require("./middleware/flash&error-middleware");
+const { error_handler } = require("./middleware/flash&error-middleware");
 
 const app = express();
 
@@ -44,7 +44,7 @@ app.all("*", (req, res, next) => {
   next(new ExpressError("Page Not Found", 404));
 });
 
-app.use(errorhandler);
+app.use(error_handler);
 
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {

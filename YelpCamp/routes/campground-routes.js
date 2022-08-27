@@ -1,10 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const { campgroundSchema } = require("../schemas.js");
-const {
-  ExpressError,
-  catchAsync,
-} = require("../utils/ExpressError&catchAsync");
+const { ExpressError } = require("../utils/ExpressError&catchAsync");
+const { catchAsync } = require("../utils/ExpressError&catchAsync");
+
 const campgroundControllers = require("../controllers/campground-controllers");
 
 const validateCampground = (req, res, next) => {
