@@ -1,11 +1,10 @@
 const express = require("express");
 const router = express.Router();
+const isLoggedIn = require("../middleware/isLoggedIn");
 
 const { reviewSchema } = require("../schemas.js");
-const {
-  ExpressError,
-  catchAsync,
-} = require("../utils/ExpressError&catchAsync");
+const { ExpressError } = require("../utils/ExpressError&catchAsync");
+const { catchAsync } = require("../utils/ExpressError&catchAsync");
 
 const reviewControllers = require("../controllers/review-controllers");
 
@@ -21,12 +20,14 @@ const validateReview = (req, res, next) => {
 
 router.post(
   "/campgrounds/:id/reviews",
+  isLoggedIn,
   validateReview,
   catchAsync(reviewControllers.create_review)
 );
 
 router.delete(
   "/campgrounds/:id/reviews/:reviewId",
+  isLoggedIn,
   catchAsync(reviewControllers.delete_review)
 );
 

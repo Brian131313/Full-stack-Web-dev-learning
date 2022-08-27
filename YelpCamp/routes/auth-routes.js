@@ -4,6 +4,7 @@ const passport = require("passport");
 
 const { catchAsync } = require("../utils/ExpressError&catchAsync");
 const User = require("../models/user");
+const { request } = require("express");
 
 router.get("/signup", (req, res) => {
   res.render("auth/signup");
@@ -41,4 +42,11 @@ router.post(
     res.redirect("/campgrounds");
   }
 );
+
+router.get("/logout", (req, res) => {
+  req.logout();
+  req.flash("success", `Log out! Goodbye ${req.body.username}`);
+  res.redirect("/campgrounds");
+});
+
 module.exports = router;
